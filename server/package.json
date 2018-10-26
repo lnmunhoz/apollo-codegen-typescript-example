@@ -1,0 +1,33 @@
+{
+  "name": "my-app",
+  "scripts": {
+    "start": "dotenv -- ts-node src/index.ts",
+    "start:watch": "nodemon -e ts,graphql,.env --exec 'yarn start'",
+    "dev": "npm-run-all --parallel start:watch playground",
+    "debug": "dotenv -- nodemon -e ts,graphql -x ts-node --inspect src/index.ts",
+    "playground": "graphql playground",
+    "build": "rimraf dist && tsc"
+  },
+  "dependencies": {
+    "bcryptjs": "2.4.3",
+    "graphql": "0.13.2",
+    "graphql-yoga": "^1.16.7",
+    "jsonwebtoken": "8.3.0",
+    "prisma-binding": "2.1.6"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "2.4.2",
+    "dotenv-cli": "1.4.0",
+    "graphql-cli": "2.16.7",
+    "nodemon": "1.18.4",
+    "npm-run-all": "4.1.3",
+    "prisma": "1.19.0",
+    "rimraf": "2.6.2",
+    "ts-node": "7.0.1",
+    "typescript": "2.9.2"
+  },
+  "resolutions": {
+    "graphql": "^0.13.2",
+    "**/graphql": "^0.13.2"
+  }
+}
