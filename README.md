@@ -45,3 +45,8 @@ yarn
 yarn start
 ```
 
+## Resources
+More about this topic:
+- https://www.apollographql.com/docs/react/recipes/static-typing.html
+- https://medium.com/@SunCerberus/automatic-type-definition-with-apollo-codegen-example-%EF%B8%8F-87e586a1bac8
+- https://github.com/apollographql/apollo-cli/issues/366 (client queries)
