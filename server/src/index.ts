@@ -1,6 +1,9 @@
 import { GraphQLServer } from 'graphql-yoga'
 import { Prisma } from './generated/prisma'
 import resolvers from './resolvers'
+import { ApolloEngine } from 'apollo-engine'
+
+const PORT = process.env.PORT || 4000
 
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
@@ -8,10 +11,31 @@ const server = new GraphQLServer({
   context: req => ({
     ...req,
     db: new Prisma({
-      endpoint: process.env.PRISMA_ENDPOINT, // the endpoint of the Prisma API (value set in `.env`)
-      debug: true, // log all GraphQL queries & mutations sent to the Prisma API
-      // secret: process.env.PRISMA_SECRET, // only needed if specified in `database/prisma.yml` (value set in `.env`)
-    }),
-  }),
+      endpoint: process.env.PRISMA_ENDPOINT,
+      debug: true
+    })
+  })
 })
-server.start(() => console.log(`Server is running on http://localhost:4000`))
+
+const engine = new ApolloEngine({
+  apiKey: process.env.APOLLO_ENGINE_KEY
+})
+
+const httpServer = server.createHttpServer({
+  tracing: true,
+  cacheControl: true
+})
+
+engine.listen(
+  {
+    port: PORT,
+    httpServer,
+    graphqlPaths: ['/']
+  },
+  () =>
+    console.log(
+      `Server with Apollo Engine is running on http://localhost:${PORT}`
+    )
+)
+
+// server.start(() => console.log(`Server is running on http://localhost:4000`))

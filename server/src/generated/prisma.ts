@@ -22,8 +22,8 @@ export interface Mutation {
     deleteUser: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertPost: <T = Post>(args: { where: PostWhereUniqueInput, create: PostCreateInput, update: PostUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertUser: <T = User>(args: { where: UserWhereUniqueInput, create: UserCreateInput, update: UserUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyPosts: <T = BatchPayload>(args: { data: PostUpdateManyInput, where?: PostWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyUsers: <T = BatchPayload>(args: { data: UserUpdateManyInput, where?: UserWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyPosts: <T = BatchPayload>(args: { data: PostUpdateManyMutationInput, where?: PostWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyUsers: <T = BatchPayload>(args: { data: UserUpdateManyMutationInput, where?: UserWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyPosts: <T = BatchPayload>(args: { where?: PostWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyUsers: <T = BatchPayload>(args: { where?: UserWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
@@ -90,8 +90,8 @@ type Mutation {
   deleteUser(where: UserWhereUniqueInput!): User
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  updateManyPosts(data: PostUpdateManyInput!, where: PostWhereInput): BatchPayload!
-  updateManyUsers(data: UserUpdateManyInput!, where: UserWhereInput): BatchPayload!
+  updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   deleteManyPosts(where: PostWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
@@ -240,7 +240,7 @@ input PostUpdateInput {
   author: UserUpdateOneRequiredWithoutPostsInput
 }
 
-input PostUpdateManyInput {
+input PostUpdateManyMutationInput {
   isPublished: Boolean
   title: String
   text: String
@@ -589,7 +589,7 @@ input UserUpdateInput {
   posts: PostUpdateManyWithoutAuthorInput
 }
 
-input UserUpdateManyInput {
+input UserUpdateManyMutationInput {
   email: String
   password: String
   name: String
@@ -1035,7 +1035,7 @@ export interface UserCreateOneWithoutPostsInput {
   connect?: UserWhereUniqueInput
 }
 
-export interface UserUpdateManyInput {
+export interface UserUpdateManyMutationInput {
   email?: String
   password?: String
   name?: String
@@ -1076,7 +1076,7 @@ export interface PostUpdateWithoutAuthorDataInput {
   text?: String
 }
 
-export interface PostUpdateManyInput {
+export interface PostUpdateManyMutationInput {
   isPublished?: Boolean
   title?: String
   text?: String

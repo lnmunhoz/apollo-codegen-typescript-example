@@ -1,9 +1,9 @@
-import * as React from 'react';
+import * as React from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 
 import logo from './logo.svg'
-import './App.css';
+import './App.css'
 import { FeedQuery, PostQuery, PostQueryVariables } from './generated/queries'
 
 const FEED_QUERY = gql`
@@ -46,11 +46,10 @@ class App extends React.Component<{}, IAppState> {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">React + TypesScript + Apollo</h1>
         </header>
-        <p className="App-intro">
-          Select a post to show its text
-        </p>
+        <p className="App-intro">Select a post to show its text</p>
+
         <Query<FeedQuery, {}> query={FEED_QUERY}>
           {({ data, loading, error }) => {
             if (loading) {
@@ -62,8 +61,13 @@ class App extends React.Component<{}, IAppState> {
 
               return (
                 <React.Fragment>
-                  {data.feed.map((item) => (
-                    <li key={item.id}> {item.title} <button onClick={this.selectPost.bind(this, item.id)}>Select</button></li>
+                  {data.feed.map(item => (
+                    <li key={item.id}>
+                      {item.title}
+                      <button onClick={this.selectPost.bind(this, item.id)}>
+                        Select
+                      </button>
+                    </li>
                   ))}
                 </React.Fragment>
               )
@@ -72,21 +76,25 @@ class App extends React.Component<{}, IAppState> {
         </Query>
 
         {this.state.selectedPostId ? (
-          <Query<PostQuery, PostQueryVariables> query={POST_QUERY} variables={{
-            id: this.state.selectedPostId
-          }}>
+          <Query<PostQuery, PostQueryVariables>
+            query={POST_QUERY}
+            variables={{
+              id: this.state.selectedPostId
+            }}
+          >
             {({ data, loading }) => {
               if (loading) return <p>Fetching post...</p>
               if (!data || !data.post) return <p>Sorry, no data</p>
-              return (
-                <p>{data.post.text}</p>
-              )
+
+              return <p>{data.post.text}</p>
             }}
           </Query>
-        ) : <p>Select a post</p>}
-      </div >
-    );
+        ) : (
+          <p>Select a post</p>
+        )}
+      </div>
+    )
   }
 }
 
-export default App;
+export default App

@@ -1,5 +1,5 @@
-# source: https://eu1.prisma.sh/public-fossiltrader-318/my-app/dev
-# timestamp: Fri Oct 26 2018 11:55:52 GMT+0700 (ICT)
+# source: http://localhost:4466
+# timestamp: Thu Nov 08 2018 09:53:48 GMT+0700 (+07)
 
 type AggregatePost {
   count: Int!
@@ -31,8 +31,8 @@ type Mutation {
   deleteUser(where: UserWhereUniqueInput!): User
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  updateManyPosts(data: PostUpdateManyInput!, where: PostWhereInput): BatchPayload!
-  updateManyUsers(data: UserUpdateManyInput!, where: UserWhereInput): BatchPayload!
+  updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   deleteManyPosts(where: PostWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
@@ -181,7 +181,7 @@ input PostUpdateInput {
   author: UserUpdateOneRequiredWithoutPostsInput
 }
 
-input PostUpdateManyInput {
+input PostUpdateManyMutationInput {
   isPublished: Boolean
   title: String
   text: String
@@ -530,7 +530,7 @@ input UserUpdateInput {
   posts: PostUpdateManyWithoutAuthorInput
 }
 
-input UserUpdateManyInput {
+input UserUpdateManyMutationInput {
   email: String
   password: String
   name: String
